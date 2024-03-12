@@ -57,6 +57,8 @@ for i in archivos_excel:
             accounts_checked += 1
     
     except:
+        if account == 'DocumentsGeneratedIA\.keep':
+            continue
         shutil.move(account, r"C:\Users\Usuario\Documents\invoicing-automation\accounts_to_review")
         print(f"-- The following account can't be processed {cleaned_company_name} --")
         accounts_unchecked += 1

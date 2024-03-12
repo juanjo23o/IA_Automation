@@ -3,4 +3,6 @@
 copy_utilities.py
 *.xlsx
 main.ipynb
-
+*.docx
+*accdb
+*.pptx
