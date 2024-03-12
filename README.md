@@ -1,7 +1,8 @@
 To carry out the process you have to:
+
 1 - Install the necessary libraries through the requirements.txt with the following command:  
 
-   pip install -r requirements.txt  
+   - pip install -r requirements.txt  
 
 2 - Download the sdm documents, extract the .rar and put it in the SupportDocuments folder  
 
