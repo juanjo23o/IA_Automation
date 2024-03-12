@@ -1,0 +1,6 @@
+*.txt
+!requirements.txt
+copy_utilities.py
+*.xlsx
+main.ipynb
+
