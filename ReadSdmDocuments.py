@@ -23,6 +23,28 @@ for i in archivos_excel:
             wb = load_workbook(account)
         except:continue
 
+        # sheet_1 = '3-15-2024'
+        # sheet_2 = '03-15-2024'
+        # sheet_name = ''
+        # flag_account = True
+        # # Obtén los nombres de las hojas
+        # sheet_names = wb.sheetnames
+
+        # # Imprime los nombres de las hojas
+        # for name in sheet_names:
+        #     if sheet_1 == name.strip() or sheet_2 == name.strip():
+        #         sheet_name = name
+        #         sheet = wb[sheet_name]
+        #         break
+        #     else:
+        #         shutil.move(account, r"wrong_cycle")
+        #         flag_account = False
+        #         break
+        # if flag_account == True:
+        #     pass
+        # else:
+        #     continue
+
         try:
             try:
                 sheet = wb['3-15-2024']
@@ -41,6 +63,7 @@ for i in archivos_excel:
         except:
             shutil.move(account, r"wrong_cycle")
             continue
+        
         
         try:
         # archivo_excel = account
