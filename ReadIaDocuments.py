@@ -40,11 +40,13 @@ for i in archivos_excel:
         
         results = process_excel(sheet)
 
+        valid_results = {x: 'workplace' if y == '' else y for x, y in results[2].items()}
+
         df = pd.DataFrame(results[0], columns=results[1])
 
         flag = 'IA'
 
-        employees = extract_infortmation(df, 'SDM', cleaned_company_name, account, results[2]['rate'], results[2]['equipment'], results[2]['active_date'], results[2]['rate_adjustment'], results[2]['credit_days'], account.split('\\')[1], results[2]['set_up_fee'], results[2]['bonus'])
+        employees = extract_infortmation(df, 'IA', cleaned_company_name, account, valid_results['rate'], valid_results['equipment'], valid_results['active_date'], valid_results['rate_adjustment'], valid_results['credit_days'], account.split('\\')[1], valid_results['set_up_fee'], valid_results['bonus'], valid_results['ot_hours'], valid_results['ot_amount'])
 
         if employees == False:
             accounts_unchecked += 1

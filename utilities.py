@@ -1,5 +1,7 @@
+
 from datetime import datetime
 import pandas as pd
+import pycountry
 import re
 
 
@@ -11,6 +13,8 @@ def process_excel(sheet):
         'active_date':'',
         'bonus':'',
         'equipment':'',
+        'ot_hours':'',
+        'ot_amount':'',
         'rate_adjustment':'',
         'credit_days':''
     }
@@ -106,6 +110,14 @@ def process_excel(sheet):
                 get_column_bonus = re.findall(r'(bonus*.+)',column.replace(' ',''))[0]
                 column = get_column_bonus
                 modified_columns['bonus'] = column
+            elif 'ot hours' in column:
+                get_column_hours = re.findall(r'(ot hours)',column)[0]
+                column = get_column_hours
+                modified_columns['ot_hours'] = column
+            elif 'ot amount' in column:
+                get_column_amount = re.findall(r'(ot amount)',column)[0]
+                column = get_column_amount
+                modified_columns['ot_amount'] = column 
             else:...
             new.append(column)
         except:
@@ -147,15 +159,18 @@ def extract_infortmation(df, flag, *args):
         
         arguments = [args[0], file_name, str(df.at[i, 'id']), df.at[i, 'name'].lower(), df.at[i, 'title'].lower(), 
                             df.at[i, 'status'].strip().lower(), df.at[i, args[2]], df.at[i, args[6]],
-                            df.at[i, "prorate amount"], df.at[i, "set up fee"], df.at[i, args[9]],
-                            df.at[i, "ot hours"], df.at[i, "ot amount"], df.at[i, args[3]], df.at[i, args[4]], 
+                            df.at[i, "prorate amount"], df.at[i, args[8]], df.at[i, args[9]],
+                            df.at[i, args[10]], df.at[i, args[11]], df.at[i, args[3]], df.at[i, args[4]], 
                             df.at[i, args[5].lower()], df.at[i, 'assigned date']]
 
         for i, key in enumerate(employee_data.keys()):
-            try:
-                employee_data[key] = arguments[i]
-            except:
-                pass
+                try:
+                    if pycountry.countries.lookup(arguments[i]):
+                        employee_data[key] = 'This column does not exist in the sdm'
+                    # else:
+                    #     employee_data[key] = arguments[i]
+                except:
+                    employee_data[key] = arguments[i]
 
         employee['employee_'+str(index)] = employee_data
         

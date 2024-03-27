@@ -25,19 +25,19 @@ for i in archivos_excel:
 
         try:
             try:
-                sheet = wb['3-15-2024']
-                sheet_name = '3-15-2024'
+                sheet = wb['3-1-2024']
+                sheet_name = '3-1-2024'
             except:
                 try:
-                    sheet = wb['3-15-2024 ']
-                    sheet_name = '3-15-2024 '
+                    sheet = wb['3-1-2024 ']
+                    sheet_name = '3-1-2024 '
                 except:
                     try:
-                        sheet = wb['3-15-2024  ']
-                        sheet_name = '3-15-2024  '
+                        sheet = wb['3-1-2024  ']
+                        sheet_name = '3-1-2024  '
                     except:
-                        sheet = wb['03-15-2024']
-                        sheet_name = '03-15-2024'
+                        sheet = wb['03-1-2024']
+                        sheet_name = '03-1-2024'
         except:
             shutil.move(account, r"wrong_cycle")
             continue
@@ -58,11 +58,13 @@ for i in archivos_excel:
 
             results = process_excel(sheet)
 
+            valid_results = {x: 'workplace' if y == '' else y for x, y in results[2].items()}
+
             df = pd.DataFrame(results[0], columns=results[1])
 
             flag = 'SDM'
 
-            employees = extract_infortmation(df, 'SDM', cleaned_company_name, account, results[2]['rate'], results[2]['equipment'], results[2]['active_date'], results[2]['rate_adjustment'], results[2]['credit_days'], account.split('\\')[1], results[2]['set_up_fee'], results[2]['bonus'])
+            employees = extract_infortmation(df, 'SDM', cleaned_company_name, account, valid_results['rate'], valid_results['equipment'], valid_results['active_date'], valid_results['rate_adjustment'], valid_results['credit_days'], account.split('\\')[1], valid_results['set_up_fee'], valid_results['bonus'], valid_results['ot_hours'], valid_results['ot_amount'])
 
             account_details.append(employees)
             with open('accounts_processed_sdm.txt', 'a', encoding='utf-8') as archivo:
